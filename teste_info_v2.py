@@ -57,28 +57,6 @@ def obter_codec(formats):
     return codecs
 
 
-# def mostrar_info(info):
-#     print(f"Título: {info['titulo']}")
-#     print("Resoluções e Codecs disponíveis:")
-
-#     # Mostra as resoluções e os codecs disponíveis para cada resolução
-#     for resolucao, codecs in info["codecs"].items():
-#         codecs_disponiveis = []
-
-#         for codec in codecs:
-#             match codec:
-#                 case "avc1":
-#                     codecs_disponiveis.append("H.264")
-#                 case "vp9":
-#                     codecs_disponiveis.append("VP9")
-#                 case "av01":
-#                     codecs_disponiveis.append("AV1")
-#                 case _:
-#                     codecs_disponiveis.append("Outro")
-
-#         print(f"Resolução: {resolucao} | Codecs: {codecs_disponiveis}")
-
-
 def mostrar_resolucao(info):
     print(f"Título: {info['titulo']}")
     print("Resoluções e Codecs disponíveis:")
@@ -98,22 +76,13 @@ def mostrar_codecs_disponiveis(resolucao_escolhida, info):
                 print("vp9 (VP9)")
             case "av01":
                 print("av01 (AV1)")
+            case _:
+                print(codec)
 
 
 def montar_opcao(resolucao_escolhida, codec_escolhido):
-    # match codec_escolhido:
-    #     case "H.264":
-    #         codec = "avc1"
-    #     case "VP9":
-    #         codec = "vp9"
-    #     case "AV1":
-    #         codec = "av01"
-    #     case _:
-    #         codec = "Outro"
-
     return {
-        "format": f"bv[height={resolucao_escolhida}]+ba",
-        "format_sort": [f"+vcodec:{codec_escolhido}"],
+        "format": f"bv[height={resolucao_escolhida}][vcodec^={codec_escolhido}]+ba",
         "paths": {"home": str(PASTA_DOWNLOADS)},
         "outtmpl": {"default": "%(title)s [%(id)s].%(ext)s"},
     }
